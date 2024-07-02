@@ -33,7 +33,7 @@ from .user_utils import nocache
 from werkzeug.middleware.profiler import ProfilerMiddleware
 
 app = Flask(__name__)
-app.wsgi_app = ProfilerMiddleware(app.wsgi_app,stream=sys.stderr)
+app.wsgi_app = ProfilerMiddleware(app.wsgi_app,stream=sys.stdout)
 
 # Setup config
 CONFIG = PsiturkConfig()

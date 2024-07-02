@@ -11,11 +11,19 @@ import os
 import logging
 
 stream_handler = logging.StreamHandler(sys.stdout)
-stream_handler.setLevel(logging.INFO)  # TODO: let this be configurable
+stream_handler.setLevel(logging.CRITICAL)  # TODO: let this be configurable
 stream_formatter = logging.Formatter('%(message)s')
 stream_handler.setFormatter(stream_formatter)
 logger = logging.getLogger(__name__)
 logger.addHandler(stream_handler)
+logger.setLevel(logging.DEBUG)
+
+stream_handler1 = logging.StreamHandler(sys.stderr)
+stream_handler1.setLevel(logging.CRITICAL)  # TODO: let this be configurable
+stream_formatter1 = logging.Formatter('%(message)s')
+stream_handler1.setFormatter(stream_formatter1)
+logger = logging.getLogger(__name__)
+logger.addHandler(stream_handler1)
 logger.setLevel(logging.DEBUG)
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
