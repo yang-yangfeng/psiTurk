@@ -418,6 +418,7 @@ app.wsgi_app = ProfilerMiddleware(app.wsgi_app,stream=sys.stdout)
 @app.route('/exp', methods=['GET'])
 @nocache
 def start_exp():
+    print('sanity check yyf')
     """ Serves up the experiment applet. """
     if not (('hitId' in request.args) and ('assignmentId' in request.args) and
             ('workerId' in request.args) and ('mode' in request.args)):
