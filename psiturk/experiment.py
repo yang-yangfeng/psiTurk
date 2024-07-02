@@ -32,9 +32,6 @@ from .user_utils import nocache
 
 from werkzeug.middleware.profiler import ProfilerMiddleware
 
-app = Flask(__name__)
-app.wsgi_app = ProfilerMiddleware(app.wsgi_app,stream=sys.stdout)
-
 # Setup config
 CONFIG = PsiturkConfig()
 CONFIG.load_config()
@@ -417,7 +414,7 @@ def give_consent():
         workerid=worker_id
     )
 
-
+app.wsgi_app = ProfilerMiddleware(app.wsgi_app,stream=sys.stdout)
 @app.route('/exp', methods=['GET'])
 @nocache
 def start_exp():
