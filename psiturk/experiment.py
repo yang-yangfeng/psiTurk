@@ -10,6 +10,7 @@ import user_agents
 import requests
 import re
 import json
+#import psutil
 from jinja2 import TemplateNotFound
 from collections import Counter
 
@@ -28,6 +29,11 @@ from .psiturk_statuses import *
 from .psiturk_config import PsiturkConfig
 from .experiment_errors import ExperimentError, ExperimentApiError
 from .user_utils import nocache
+
+from werkzeug.middleware.profiler import ProfilerMiddleware
+
+app = Flask(__name__)
+app.wsgi_app = ProfilerMiddleware(app.wsgi_app)
 
 # Setup config
 CONFIG = PsiturkConfig()
