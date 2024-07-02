@@ -30,7 +30,9 @@ from .psiturk_config import PsiturkConfig
 from .experiment_errors import ExperimentError, ExperimentApiError
 from .user_utils import nocache
 
+# YYF
 from werkzeug.middleware.profiler import ProfilerMiddleware
+from memory_profiler import profile
 
 # Setup config
 CONFIG = PsiturkConfig()
@@ -416,6 +418,7 @@ def give_consent():
 
 app.wsgi_app = ProfilerMiddleware(app.wsgi_app,stream=sys.stdout)
 @app.route('/exp', methods=['GET'])
+@profile
 @nocache
 def start_exp():
     print('sanity check yyf')
