@@ -32,40 +32,40 @@ from .user_utils import nocache
 
 # YYF
 from werkzeug.middleware.profiler import ProfilerMiddleware
-# from memory_profiler import profile
+from memory_profiler import profile
 
-from functools import wraps
-import memory_profiler
-try:
-    import tracemalloc
-    has_tracemalloc = True
-except ImportError:
-    has_tracemalloc = False
+# from functools import wraps
+# import memory_profiler
+# try:
+#     import tracemalloc
+#     has_tracemalloc = True
+# except ImportError:
+#     has_tracemalloc = False
 
-def my_profiler(func=None, stream=None, precision=1, backend='psutil'):
-    """
-    Decorator that will run the function and print a line-by-line profile
-    """
-    backend = memory_profiler.choose_backend(backend)
-    if backend == 'tracemalloc' and has_tracemalloc:
-        if not tracemalloc.is_tracing():
-            tracemalloc.start()
-    if func is not None:
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            prof = memory_profiler.LineProfiler(backend=backend)
-            val = prof(func)(*args, **kwargs)
-            memory_profiler.show_results(prof, stream=stream,
-                                         precision=precision)
-            return val
+# def my_profiler(func=None, stream=None, precision=1, backend='psutil'):
+#     """
+#     Decorator that will run the function and print a line-by-line profile
+#     """
+#     backend = memory_profiler.choose_backend(backend)
+#     if backend == 'tracemalloc' and has_tracemalloc:
+#         if not tracemalloc.is_tracing():
+#             tracemalloc.start()
+#     if func is not None:
+#         @wraps(func)
+#         def wrapper(*args, **kwargs):
+#             prof = memory_profiler.LineProfiler(backend=backend)
+#             val = prof(func)(*args, **kwargs)
+#             memory_profiler.show_results(prof, stream=stream,
+#                                          precision=precision)
+#             return val
 
-        return wrapper
-    else:
-        def inner_wrapper(f):
-            return profile(f, stream=stream, precision=precision,
-                           backend=backend)
+#         return wrapper
+#     else:
+#         def inner_wrapper(f):
+#             return profile(f, stream=stream, precision=precision,
+#                            backend=backend)
 
-        return inner_wrapper
+#         return inner_wrapper
 
 # Setup config
 CONFIG = PsiturkConfig()
@@ -450,8 +450,9 @@ def give_consent():
     )
 
 app.wsgi_app = ProfilerMiddleware(app.wsgi_app,stream=sys.stdout,restrictions = [30])
-@app.route('/exp', methods=['GET'])
-@my_profiler(stream=sys.stdout)
+@app.route('/exp', methods=['GET'],endpoint='exp')
+# @my_profiler(stream=sys.stdout)
+@profile
 @nocache
 def start_exp():
     print('sanity check yyf')
