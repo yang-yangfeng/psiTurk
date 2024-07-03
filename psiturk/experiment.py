@@ -34,13 +34,13 @@ from .user_utils import nocache
 from werkzeug.middleware.profiler import ProfilerMiddleware
 # from memory_profiler import profile
 
+from functools import wraps
 import memory_profiler
 try:
     import tracemalloc
     has_tracemalloc = True
 except ImportError:
     has_tracemalloc = False
-
 
 def my_profiler(func=None, stream=None, precision=1, backend='psutil'):
     """
