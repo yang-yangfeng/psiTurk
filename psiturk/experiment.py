@@ -416,9 +416,9 @@ def give_consent():
         workerid=worker_id
     )
 
-app.wsgi_app = ProfilerMiddleware(app.wsgi_app,stream=sys.stdout)
+app.wsgi_app = ProfilerMiddleware(app.wsgi_app,stream=sys.stdout,restrictions = [30])
 @app.route('/exp', methods=['GET'])
-@profile
+@profile(stream=sys.stdout)
 @nocache
 def start_exp():
     print('sanity check yyf')
